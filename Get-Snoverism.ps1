@@ -13,20 +13,17 @@ function Get-Snoverism {
     [OutputType([string])]
     param(
         [string]$uri = 'http://snoverisms.com/',
-        
+
         # When used, the computer will output the text in speech as well.
-        [switch]$talk  
+        [switch]$talk
     )
-    
     Begin{
-        
         $result = (Invoke-WebRequest -Uri $uri).Images.title | Where-Object {$_} | Get-Random
         Write-Verbose "Result is $result"
     }
-    
     Process{
 
-        $result
+        return $result
 
         if ($talk){
             Write-Verbose "-talk parameter specified."
@@ -35,7 +32,7 @@ function Get-Snoverism {
             $speak.Speak("$result")
         }
     }
-    
     End{
-    }        
+    }
 }
+
